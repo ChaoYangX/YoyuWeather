@@ -1,6 +1,10 @@
 package com.example.administrator.weather.OptionCity.view;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,35 +14,75 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.administrator.weather.OptionCity.model.Province;
+import com.example.administrator.weather.OptionCity.presenter.IPresenter;
+import com.example.administrator.weather.OptionCity.presenter.Presenter;
 import com.example.administrator.weather.R;
+import com.example.administrator.weather.WeatherPackage.view.WeatherFragment;
+import com.example.administrator.weather.WeatherPackage.view.weatherActivity;
 
 import java.util.List;
 
 public class OptionCityActivity extends AppCompatActivity implements IView,View.OnClickListener {
      TextView visibility;
      ImageButton back;
+     ImageView ping;
+     IPresenter iPresenter=new Presenter(this);
     private static final String TAG = "OptionCityActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT>=21){
+            View decorView=getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         setContentView(R.layout.activity_option_city);
         ActionBar actionBar=getSupportActionBar();
         visibility=(TextView)findViewById(R.id.visibility_text);
+        ping=(ImageView)findViewById(R.id.bing_pic_option);
         back=(ImageButton)findViewById(R.id.back_button);
         back.setOnClickListener(this);
         if(actionBar!=null)
             actionBar.hide();
-         replaceFragment(new ProvinceFragment());
-    }
-    private void  replaceFragment(Fragment fragment){
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.search_city_frame,fragment);
+        fragmentTransaction.replace(R.id.search_city_frame,new ProvinceFragment());
         fragmentTransaction.commit();
+        SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(this);
+        String bingpic=preferences.getString("bing_pic",null);
+        if(bingpic==null){
+            iPresenter.getPicData();
+        }else {
+            Glide.with(this).load(bingpic).into(ping);
+        }
+
+
+    }
+    public void  replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager=getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.search_city_frame,fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+}
+
+    @Override
+    public void getPic(final String data) {
+        SharedPreferences.Editor editor= PreferenceManager.getDefaultSharedPreferences(OptionCityActivity.this).edit();
+        editor.putString("bing_pic",data);
+        editor.apply();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Glide.with(OptionCityActivity.this).load(data).into(ping);
+            }
+        });
     }
 
     @Override
@@ -61,9 +105,14 @@ public class OptionCityActivity extends AppCompatActivity implements IView,View.
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(OptionCityActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
+                Toast.makeText(OptionCityActivity.this,"网络错误",Toast.LENGTH_LONG).show();
             }
         });
+
+    }
+
+    @Override
+    public void showData(List list) {
 
     }
 

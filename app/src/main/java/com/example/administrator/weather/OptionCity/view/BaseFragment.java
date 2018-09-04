@@ -1,8 +1,6 @@
 package com.example.administrator.weather.OptionCity.view;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,14 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.weather.R;
+import com.example.administrator.weather.WeatherPackage.view.IFragment;
 
-import java.util.List;
-
-public abstract class BaseFragment extends Fragment implements IFragment {
+public abstract class BaseFragment extends Fragment implements IView {
     protected Context context;
     protected View mRootView;
     CityAdapter cityAdapter;

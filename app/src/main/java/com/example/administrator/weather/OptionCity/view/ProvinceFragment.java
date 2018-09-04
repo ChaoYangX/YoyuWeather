@@ -22,6 +22,11 @@ public class ProvinceFragment extends BaseFragment {
     }
 
     @Override
+    public void getPic(String data) {
+
+    }
+
+    @Override
     public void showData(List list) {
         cityAdapter=new CityAdapter(this.getActivity(),list,0);
         getActivity().runOnUiThread(new Runnable() {

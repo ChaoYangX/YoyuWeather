@@ -1,17 +1,14 @@
 package com.example.administrator.weather.OptionCity.presenter;
 
-import android.os.Looper;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.administrator.weather.OptionCity.model.City;
 import com.example.administrator.weather.OptionCity.model.County;
 import com.example.administrator.weather.OptionCity.model.Province;
-import com.example.administrator.weather.OptionCity.view.CityAdapter;
-import com.example.administrator.weather.OptionCity.view.IFragment;
 import com.example.administrator.weather.OptionCity.view.IView;
-import com.example.administrator.weather.OptionCity.view.ProvinceFragment;
+import com.example.administrator.weather.WeatherPackage.model.Imodel;
+import com.example.administrator.weather.WeatherPackage.model.InternetData;
+import com.example.administrator.weather.WeatherPackage.view.IFragment;
 import com.example.administrator.weather.Util.HttpUtil;
 import com.example.administrator.weather.Util.JsonUtil;
 
@@ -21,12 +18,24 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Response;
 public class Presenter implements IPresenter {
-    IFragment iView;
+    IView iView;
     List list;
+    Imodel imodel=new InternetData(this);
     private static final String TAG = "Presenter";
-    public Presenter(IFragment iView){
+    public Presenter(IView iView){
         this.iView=iView;
     }
+
+    @Override
+    public void setPicData(String data) {
+        iView.getPic(data);
+    }
+
+    @Override
+    public void getPicData() {
+        imodel.getFragmentBingPic();
+    }
+
     @Override
     public void exchangeData(String url) {
         list=LitePal.findAll(Province.class);

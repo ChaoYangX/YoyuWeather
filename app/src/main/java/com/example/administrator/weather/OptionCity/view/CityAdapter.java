@@ -15,6 +15,7 @@ import com.example.administrator.weather.OptionCity.model.City;
 import com.example.administrator.weather.OptionCity.model.County;
 import com.example.administrator.weather.OptionCity.model.Province;
 import com.example.administrator.weather.R;
+import com.example.administrator.weather.WeatherPackage.view.weatherActivity;
 
 import org.litepal.LitePal;
 
@@ -57,12 +58,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
                     OptionCityActivity activity;
                     activity= (OptionCityActivity) v.getContext();
                     CityFragment cityFragment=new CityFragment(provinceList.get(position).getProvinceCode(),provinceList.get(position).getProvinceName());
-                    FragmentManager fragmentManager=activity.getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.search_city_frame,cityFragment);
-                    fragmentTransaction.addToBackStack(null);
-                    currentLevel=1;
-                    fragmentTransaction.commit();
+                   activity.replaceFragment(cityFragment);
                 }
             });
         }
@@ -75,19 +71,20 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
                     OptionCityActivity activity;
                     activity= (OptionCityActivity) v.getContext();
                     CountyFragment countyFragment=new CountyFragment(cityList.get(position).getCityCode(),cityList.get(position).getProvinceId());
-                    FragmentManager fragmentManager=activity.getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.search_city_frame,countyFragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    activity.replaceFragment(countyFragment);
                 }
             });
         }
         else  if(currentLevel==2){
             county=countyList.get(position);
-            //City city=(LitePal.where("cityCode=?",String.valueOf(county.getCityId())).find(City.class)).get(0);
-            //title.setText(city.getCityName());
             holder.textView.setText(county.getCountyName());
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    OptionCityActivity  activity= (OptionCityActivity) v.getContext();
+                    weatherActivity.getUrl(activity,countyList.get(position).getWeatherId());
+                }
+            });
 
 
         }
