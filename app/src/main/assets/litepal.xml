@@ -3,9 +3,9 @@
     <dbname value="WeatherStore" ></dbname>
     <version value="3" ></version>
         <list>
-            <mapping class="com.example.administrator.weather.OptionCity.model.City"></mapping>
-            <mapping class="com.example.administrator.weather.OptionCity.model.Province"></mapping>
-            <mapping class="com.example.administrator.weather.OptionCity.model.County"></mapping>
-            <mapping class="com.example.administrator.weather.WeatherPackage.model.WeatherCity"></mapping>
+            <mapping class="com.example.administrator.yuyouweather.OptionCity.model.City"></mapping>
+            <mapping class="com.example.administrator.yuyouweather.OptionCity.model.Province"></mapping>
+            <mapping class="com.example.administrator.yuyouweather.OptionCity.model.County"></mapping>
+            <mapping class="com.example.administrator.yuyouweather.WeatherPackage.model.WeatherCity"></mapping>
        </list>
     </litepal>

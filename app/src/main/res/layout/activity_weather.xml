@@ -4,12 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    tools:context=".WeatherPackage.view.weatherActivity">
+    tools:context="com.example.administrator.yuyouweather.WeatherPackage.view.weatherActivity">
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/draw"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#80000000"
    >
     <ImageView
         android:id="@+id/bing_pic"
@@ -50,7 +50,7 @@
     </android.support.v4.widget.SwipeRefreshLayout>
     <fragment
         android:id="@+id/side_weather_fragment"
-        android:name="com.example.administrator.weather.WeatherPackage.view.WeatherFragment"
+        android:name="com.example.administrator.yuyouweather.WeatherPackage.view.WeatherFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"

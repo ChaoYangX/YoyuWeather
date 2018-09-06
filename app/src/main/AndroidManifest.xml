@@ -18,30 +18,30 @@
     <application
         android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="S8rDH2Hqe2olZhdFCxOiaOHlil2cjbLt" />
 
-        <activity android:name=".WeatherPackage.view.weatherActivity">
+        <activity android:name="com.example.administrator.yuyouweather.WeatherPackage.view.weatherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".OptionCity.view.OptionCityActivity" />
+        <activity android:name="com.example.administrator.yuyouweather.OptionCity.view.OptionCityActivity" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
         <service
-            android:name=".WeatherService"
+            android:name="com.example.administrator.yuyouweather.WeatherService"
             android:enabled="true"
             android:exported="true"></service>
     </application>
